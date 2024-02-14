@@ -9,20 +9,19 @@ class UsersDaoRepository {
 
   Future<Users?> getCurrentUser() async {
     var user = firebaseAuth.currentUser;
-
     if (user != null) {
       var query =
           collectionUsers.where("email", isEqualTo: user.email.toString());
-
+      
       try {
         var querySnapshot = await query.get();
-
+        
         if (querySnapshot.docs.isNotEmpty) {
           var document = querySnapshot.docs.first;
           var data = document.data();
           var key = document.id;
           var user = Users.fromJson(data, key);
-
+          print("user2: " + user.toString());
           return user;
         }
       } catch (e) {
@@ -41,10 +40,10 @@ class UsersDaoRepository {
       UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
       if (userCredential.user != null) {
-        print("Giriş Başarılı: ${userCredential.user}");
+        //  print("Giriş Başarılı: ${userCredential.user}");
       }
     } on FirebaseAuthException catch (e) {
-      print("Bir sorun oluştu: $e");
+      // print("Bir sorun oluştu: $e");
     }
   }
 
@@ -56,13 +55,16 @@ class UsersDaoRepository {
     }
   }
 
-  Future<void> registerUser(
-      String email, String password) async {
+  Future<void> registerUser(String email, String password) async {
     var newUser = HashMap<String, dynamic>();
 
     newUser["userid"] = "";
+    newUser["fullname"] = "";
     newUser["email"] = email;
     newUser["password"] = password;
+    newUser["birthdate"] = "";
+    newUser["biography"] = "";
+    newUser["hobbies"] = [];
 
     DocumentReference newDocumentRef = await collectionUsers.add(newUser);
     String documentId = newDocumentRef.id;
@@ -74,7 +76,7 @@ class UsersDaoRepository {
   Future<void> updateUser(
       String userid, String username, String useraddress) async {
     var updateUser = HashMap<String, dynamic>();
-    updateUser["username"] = username;
+    // updateUser["username"] = username;
     // updateUser["address"] = useraddress;
 
     collectionUsers.doc(userid).update(updateUser);

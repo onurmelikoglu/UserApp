@@ -11,7 +11,7 @@ class customText extends StatelessWidget {
   TextOverflow textOverflow;
 
 
-  customText({
+  customText({super.key, 
     required this.text,
     required this.fontsize,
     this.fontweight = FontWeight.w400,

@@ -26,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> checkIsLoginSuccessed() async {
     Users? currentUser = await krepo.getCurrentUser();
+    print("user: " + currentUser.toString());
     if (currentUser != null) {
       isLoginSuccessed = true;
     } else {
@@ -93,8 +94,9 @@ class _LoginPageState extends State<LoginPage> {
                           .read<LoginPageCubit>()
                           .signIn(tcEmail.text, tcPassword.text)
                           .then((value) {
-                        const CircularProgressIndicator();
+                        // const CircularProgressIndicator();
                         checkIsLoginSuccessed().then((value) {
+                         
                           if (isLoginSuccessed) {
                             Navigator.pushReplacement(
                                 context,
@@ -105,14 +107,14 @@ class _LoginPageState extends State<LoginPage> {
                               SnackBar(
                                 backgroundColor: dangerColor,
                                 content: customText(
-                                    text:
-                                        "Kullanıcı giriş bilgileri hatalı.\n Lütfen tekrar deneyiniz!",
-                                    fontsize: 16,
-                                    color: Colors.white,
-                                    maxlines: 2,
-                                    textOverflow: TextOverflow.visible,
-                                    textAlign: TextAlign.center,
-                                    ),
+                                  text:
+                                      "Kullanıcı giriş bilgileri hatalı.\n Lütfen tekrar deneyiniz!",
+                                  fontsize: 16,
+                                  color: Colors.white,
+                                  maxlines: 2,
+                                  textOverflow: TextOverflow.visible,
+                                  textAlign: TextAlign.center,
+                                ),
                                 duration: const Duration(seconds: 3),
                               ),
                             );
@@ -133,8 +135,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder: (context) => const RegisterPage()));
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RegisterPage()));
                     },
                     child: customText(
                         text: "Kayıt Ol",

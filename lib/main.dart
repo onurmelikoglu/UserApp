@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:userapp/ui/cubit/homepage_cubit.dart';
 import 'package:userapp/ui/cubit/loginpage_cubit.dart';
 import 'package:userapp/ui/cubit/registerpage_cubit.dart';
 import 'package:userapp/ui/utils/colors.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => LoginPageCubit()),
         BlocProvider(create: (context) => RegisterPageCubit()),
+        BlocProvider(create: (context) => HomePageCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
